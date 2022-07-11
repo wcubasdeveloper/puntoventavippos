@@ -1,0 +1,43 @@
+<ion-content [fullscreen]="true"  >
+
+  <form  [formGroup]="formGroup"  (ngSubmit)="onSubmit()"  style="padding-top: 50%;" > 
+    <ion-card>
+      <ion-card-content >
+        <ion-list lines="full" class="ion-no-margin">
+          
+          <ion-item>
+            <img src="/assets/logo/logo_vip.jpeg" />
+
+            <ion-label color="danger" style="font-family: 'Brush Script MT', cursive;font-size:11vw; text-align: center;font-weight: bold;" >
+              VIPPOS 
+              <span style="color:#0096ff !important" ><ion-icon name="calculator-outline"></ion-icon></span>
+            </ion-label>
+           
+          </ion-item>
+
+          <ion-item>
+            <ion-label><ion-icon style="font-size: 20px;" name="people-outline"></ion-icon></ion-label>
+            <ion-input formControlName="usuario" value=""  maxlength="45" autocomplete="off" placeholder="Ingrese su usuario"></ion-input>
+          </ion-item>
+        
+          <ion-item>
+            <ion-label><ion-icon style="font-size: 20px;"  name="key-outline"></ion-icon></ion-label>
+            <ion-input formControlName="clave" maxlength="30" value="" type="password" placeholder="Ingresar clave"></ion-input>
+          </ion-item>
+
+          <section class="full-width">
+            <ion-button class="btnIngresarLogin" expand="full" type="submit" color="secondary">Ingresar</ion-button>
+            <p style="text-align: center;padding-top: 10px;padding-bottom: 0px;">
+              v0.0.2
+            </p>
+          </section>
+
+          
+
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </form>   
+
+
+</ion-content>

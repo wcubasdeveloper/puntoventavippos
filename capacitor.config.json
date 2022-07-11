@@ -1,0 +1,16 @@
+{
+	"appId": "io.rapido.vippos",
+	"appName": "POSVIP",
+	"webDir": "www",
+	"bundledWebRuntime": false,
+	"plugins": {
+	"BluetoothLe": {
+			"displayStrings": {
+			"scanning": "Scanning...",
+			"cancel": "Cancel",
+			"availableDevices": "Available devices",
+			"noDeviceFound": "No device found"
+			}
+		}
+	}
+}

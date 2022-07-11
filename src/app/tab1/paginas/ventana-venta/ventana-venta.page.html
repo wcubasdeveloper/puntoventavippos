@@ -1,0 +1,285 @@
+<!-- <ion-text  style="background-color: #0096ff;color:white" >
+  <h4 style="text-align: center;" ><ion-icon (click)="cerrarModal()" style="position: absolute; left: 5%;" name="chevron-back-outline"></ion-icon>{{rutaSeleccionada}}</h4>
+</ion-text> -->
+
+<ion-text  style="background-color: #0096ff;color:white" >
+  <h5 style="text-align: center;" ><ion-icon (click)="cerrarModal()" style="position: absolute; left: 5%;" name="chevron-back-outline"></ion-icon>{{rutaSeleccionada}} 
+    <ion-badge style="vertical-align: middle;color:white;" color="warning">{{horaSalida}}</ion-badge>
+  </h5>
+</ion-text>
+
+
+
+  <ion-content  color="medium" >
+    <form  [formGroup]="formGroup"  (ngSubmit)="onSubmit()"   > 
+    <ion-list>
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+                <ion-label position="stacked">(Piso  {{asientoSeleccionado.piso}})</ion-label>
+                <ion-label position="stacked">Asiento</ion-label>
+                <h4 style="font-size: 7vw;" >{{ asientoSeleccionado.numeroAsiento }}</h4>
+            </ion-col>
+            <ion-col>
+                <ion-label position="stacked">S/</ion-label>
+                <ion-input formControlName="precioBoleto"  type="number" style="font-size: 13vw;" value="0.00" readonly="{{ precioEditable ? false  : true }}"  ></ion-input>
+        
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+      <!-- <ion-item>
+        <ion-label position="stacked">Servicio</ion-label>
+        <ion-select formControlName="tipoServicio"  value="Sele" value="1"  interface="action-sheet">
+          <ion-select-option value="1">VIP</ion-select-option>
+          <ion-select-option value="2">ECONÓMICO</ion-select-option>
+        </ion-select>      
+
+ 
+      </ion-item> -->
+
+
+      <ion-item>
+        <ion-grid style="width: 100%;" >
+          <ion-row>
+            <ion-col>
+              <ion-label position="stacked">Servicio</ion-label>
+              <ion-select formControlName="tipoServicio"  value="Sele" value="1"  interface="action-sheet">
+                <ion-select-option value="1">VIP</ion-select-option>
+                <ion-select-option value="2">ECONÓMICO</ion-select-option>
+              </ion-select>   
+            </ion-col>
+            
+            <ion-col >
+              <ion-label position="stacked">Forma Pago</ion-label>
+              <ion-select formControlName="formaPago"  value="Sele" value="1"  interface="action-sheet">
+                <ion-select-option value="1">EFECTIVO</ion-select-option>
+                <ion-select-option value="3">TARJETA DÉBITO</ion-select-option>
+                <ion-select-option value="4">TARJETA CRÉDITO</ion-select-option>
+              </ion-select>   
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+
+      <ion-item>
+        <ion-grid >
+          <ion-row>
+            <ion-col>
+              <ion-segment (ionChange)="cambioTipoRecibo($event)"  value="Boleta" >
+                <ion-segment-button value="Boleta"  >
+                  <ion-label>Boleta</ion-label>
+                </ion-segment-button>
+                <ion-segment-button value="Factura">
+                  <ion-label>Factura</ion-label>
+                </ion-segment-button>
+              </ion-segment>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+      <ion-item  *ngIf="activarDatosFactura" >
+        <ion-grid slot="start" >
+          <ion-row>
+            <ion-col>
+                <ion-label position="stacked">RUC</ion-label>
+                <ion-input (keyup)="verificasiborroRUC($event)" formControlName="numeroRUC" type="tel" placeholder="RUC"  ></ion-input>
+                
+            </ion-col>
+            <!-- <ion-col>
+              
+            </ion-col> -->
+          </ion-row>
+        </ion-grid>
+        <ion-icon style="font-size: 5vw;padding-top: 28px;" slot="end" name="search"  (click)="buscarDatosEmpresa()" ></ion-icon>  
+      </ion-item>
+
+      <ion-item  *ngIf="activarDatosFactura" >
+        <ion-grid slot="start" >
+          <ion-row>
+            <ion-col size="auto" >
+                <ion-label position="stacked">Razón social</ion-label>
+                <ion-input formControlName="razonSocialRUC" type="text" placeholder="Razón social"  ></ion-input>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+      <ion-item  *ngIf="activarDatosFactura" >
+        <ion-grid slot="start" >
+          <ion-row>
+            <ion-col>
+                <ion-label position="stacked">Dirección</ion-label>
+                <ion-input formControlName="direccionEmpresa" type="text" placeholder="Dirección"  ></ion-input>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+                <ion-label position="stacked">Origen</ion-label>
+                <ion-input formControlName="origen" disabled="disabled" type="text" placeholder="Origen"  ></ion-input>
+            </ion-col>
+            <ion-col>
+                <ion-label position="stacked">Destino</ion-label>
+                <ion-input formControlName="destino" disabled="disabled" type="text" placeholder="Destino"  ></ion-input>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      
+
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-label position="stacked">Tipo Documento</ion-label>
+              <ion-select  formControlName="tipoDocumento" #tipodocumento (ionChange)="cambioTipoDNI(tipodocumento.value)"  value="Sele" value="1" style="padding-left: 0;"  interface="action-sheet">
+                <ion-select-option  *ngFor="let item of arrTipoDocumentos" value="{{item.value}}">{{item.texto}}</ion-select-option>
+              </ion-select>
+            </ion-col>
+            <ion-col>
+              <ion-label position="stacked">Nro documento</ion-label>
+
+              <ion-item style="margin-top: 1px;">
+                <ion-input  (keyup)="verificasiborro($event)"  formControlName="nroDocumento" type="tel" placeholder="Número" ></ion-input> 
+                <ion-icon *ngIf="codTipoDocSeleccionado == arrTipoDocumentos[0].value" style="font-size: 5vw;" name="search" slot="end" (click)="buscarPersona()" ></ion-icon>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+      <!-- <ion-item>
+        <ion-label position="stacked">Nombres</ion-label>
+        <ion-input formControlName="nombres" type="text"  placeholder="nombres"  ></ion-input>
+      </ion-item> -->
+
+      <ion-item>
+        <ion-grid style="width: 100%;" >
+          <ion-row>
+            <ion-col class="ion-align-self-start" >
+              <ion-label position="stacked">Nombres</ion-label>
+              <ion-input formControlName="nombres" type="text"  placeholder="nombres"  ></ion-input>
+            </ion-col>
+         
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+
+
+      <ion-item>
+        <ion-grid >
+          <ion-row>
+            <ion-col>
+                <ion-label  position="stacked">A. Paterno</ion-label>
+                <ion-input formControlName="apellidoPaterno" type="text" placeholder="A. Paterno"  ></ion-input>
+            </ion-col>
+            <ion-col>
+                <ion-label position="stacked">A. Materno</ion-label>
+                <ion-input formControlName="apellidoMaterno" type="text"  placeholder="A. Materno"  ></ion-input>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-label position="stacked">F.Nacimiento</ion-label>
+              <ion-datetime 
+              
+              #txtFechaNacimiento formControlName="fechaNacimiento" 
+              displayFormat="DD/MM/YYYY" 
+              (ionChange)="calcularEdad(txtFechaNacimiento.value)"  
+              placeholder="Seleccionar fecha">
+            </ion-datetime>
+            </ion-col>
+
+            <ion-col>
+              <ion-label 
+              position="stacked">Edad</ion-label>
+              <ion-input 
+              formControlName="edad"  
+              type="number"  
+              placeholder="Ingrese su edad" ></ion-input>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+
+
+      <ion-item>
+        <ion-grid style="width: 100%;" >
+          <ion-row>
+            <ion-col class="ion-align-self-start" >
+              <ion-label position="stacked">Correo</ion-label>
+                <ion-input formControlName="correo" type="text" placeholder="Correo"  ></ion-input>
+            </ion-col>
+         
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+      <ion-item>
+        <ion-grid style="width: 100%;" >
+          <ion-row>
+            <ion-col>
+                <ion-label  position="stacked">Teléfono</ion-label>
+                <ion-input 
+                formControlName="telefono" 
+                type="tel" 
+                placeholder="Teléfono"  ></ion-input>
+            </ion-col>
+            <ion-col>
+              <ion-label position="stacked">Sexo</ion-label>
+              <ion-select formControlName="sexoPersona"  value="Sele" value="1"  interface="action-sheet">
+                <ion-select-option value="1">Masculino</ion-select-option>
+                <ion-select-option value="2">Femenino</ion-select-option>
+                
+              </ion-select>  
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+
+      <ion-item>
+        <ion-grid style="width: 100%;" >
+          <ion-row>
+            <ion-col class="ion-align-self-start" >
+              <ion-label position="stacked">Observación</ion-label>
+              <ion-textarea formControlName="observacion" ></ion-textarea>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+      <ion-item>
+
+        <ion-button  id="btnRegistrarVenta" style="width:100%"  type="submit"   expand="block"  shape="round" color="primary">
+          Registrar pasaje
+        </ion-button>
+
+      </ion-item>
+
+      <ion-item>
+        <ion-button   style="width:100%" type="button"   (click)="cancelarRegistro();"  expand="block"  shape="round" color="danger">
+          Cancelar registro
+        </ion-button>
+      </ion-item>
+
+    </ion-list>
+  </form>
+  </ion-content>

@@ -1,0 +1,7 @@
+{
+  "name": "POSVIP",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

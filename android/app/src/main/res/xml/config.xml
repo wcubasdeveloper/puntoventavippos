@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <access origin="*" />
+  
+  <feature name="AppVersion">
+    <param name="android-package" value="uk.co.whiteoctober.cordova.AppVersion"/>
+  </feature>
+
+  <feature name="BluetoothSerial">
+    <param name="android-package" value="com.megster.cordova.BluetoothSerial"/>
+  </feature>
+
+  <feature name="BluetoothLePlugin">
+    <param name="android-package" value="com.randdusing.bluetoothle.BluetoothLePlugin"/>
+  </feature>
+
+  <feature name="InAppBrowser">
+    <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser"/>
+  </feature>
+
+  <feature name="Printer">
+    <param name="android-package" value="de.appplant.cordova.plugin.printer.Printer"/>
+  </feature>
+
+  <feature name="ThermalPrinter">
+    <param name="android-package" value="de.paystory.thermal_printer.ThermalPrinterCordovaPlugin"/>
+  </feature>
+
+  
+</widget>

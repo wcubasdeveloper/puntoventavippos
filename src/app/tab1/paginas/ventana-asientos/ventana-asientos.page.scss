@@ -1,0 +1,31 @@
+.asiento{
+    background-image: url('/assets/icon/silla_bus.png');
+    background-position: center top;
+    background-repeat: no-repeat 100% 100%;
+    background-size: cover;
+}
+
+.escalera{
+    background-image: url('/assets/icon/escalera.png');
+    background-position: center top;
+    background-repeat: no-repeat 100% 100%;
+    background-size: cover;
+}
+
+.banio{
+    background-image: url('/assets/icon/banio_.png');
+    background-position: center top;
+    background-repeat: no-repeat 100% 100%;
+    background-size: cover;
+}
+
+
+.seccionCabeceraPisos{
+    background-color: #3880ff; 
+    color: white;
+    text-align: center;
+}
+
+.asientoseleccionado{
+    border: 2px solid #ffa809;
+}

@@ -1,0 +1,244 @@
+<ion-text style="background-color: #0096ff;color:white" >
+  <h4 style="text-align: center;" >DETALLE DE VENTAS</h4>
+</ion-text>
+
+<ion-content [fullscreen]="false" color="medium" >
+
+
+  <ion-grid style="background-color: white; color: black;border-bottom: 1px solid #666666d4;">
+    <ion-row>
+      <ion-col>
+        <ion-label position="stacked" style="color: #666666d4;">Usuario</ion-label>
+        <ion-input readonly="readonly" disabled="disabled" >{{nombreUsuarioActivo}}</ion-input>
+  
+      </ion-col>
+
+      <ion-col>
+        <ion-label 
+        position="stacked"
+        style="color: #666666d4;"
+
+        >Fecha consulta</ion-label>
+        <ion-datetime 
+        style="padding-left: 0;border-bottom: 1px solid #004cd3;" 
+        displayFormat="DD/MM/YYYY" 
+        [(ngModel)]="fechaActual"  
+        (ionChange)="cambioFecha()" 
+        placeholder="Seleccionar fecha"></ion-datetime>
+      </ion-col>
+    </ion-row>
+
+
+  </ion-grid>
+
+  <!-- <ion-list lines="full" class="ion-no-margin">
+    <ion-item>
+      <ion-label position="stacked" style="color: black" >Usuario</ion-label>
+      <ion-input readonly="readonly" disabled="disabled" >{{nombreUsuarioActivo}}</ion-input>
+  </ion-item>
+
+    <ion-item>
+        <ion-label position="stacked">Fecha consulta</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="fechaActual"  (ionChange)="cambioFecha()" placeholder="Seleccionar fecha"></ion-datetime>
+    </ion-item>
+  </ion-list> -->
+
+<ion-item>
+  <ion-grid >
+    <ion-row>
+      <ion-col>
+        <ion-segment (ionChange)="cambioTipoLista($event)"  value="Caja" >
+          <ion-segment-button value="Caja"  >
+            <ion-label>RESUMEN </ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="Ventas">
+            <ion-label>DETALLE</ion-label>
+          </ion-segment-button>
+          <!-- <ion-segment-button value="Neto">
+            <ion-label>Neto</ion-label>
+          </ion-segment-button> -->
+        </ion-segment>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-item>
+
+
+<ion-grid *ngIf="tabVenta.activotabcaja" style="background-color:white;color:#898989;">
+  <table style="width:100%" class="tablaprogramacion" >
+    <thead>
+      <!-- <tr style="background-color:#0096ff;color:white">
+        <th style="text-align: left">CONCEPTO</th>
+        <th style="text-align: left">TIPO</th>
+        <th style="text-align: right" >TOTAL</th>
+      </tr> -->
+    </thead>
+    <tbody>
+
+      <tr *ngIf="listaCajaMovimiento.length == 0">
+        <td style="text-align: center;"  colspan="4" >No se a encontrado información</td>
+      </tr>
+
+      <tr *ngFor="let item of listaCajaMovimiento" style="border-bottom: 1px solid #dedede;height: 60px;">
+        <td><ion-badge color="secondary" style="font-size: 2vh;padding: 9px;">{{item.Concepto }}</ion-badge>  </td>
+        <!-- <td style="max-width: 50px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" ><span>{{item.Documento}}</span> </td> -->
+        <td style="font-size: 2vh;" >{{item.Documento}}</td>
+        <td style="text-align: right;font-size: 2vh;">{{item.Total}}</td>
+      </tr>
+      
+      <tr *ngIf="listaCajaMovimiento.length > 0">
+        <td style="text-align: center;"  colspan="4" >
+          <ion-button 
+          shape="round" fill="outline"
+          (click)="imprimirResumen();" 
+          color="primary">
+  
+            Imprimir resumen &nbsp;&nbsp;<ion-icon 
+            style="font-size: 3.5vh;"
+            name="print-outline"
+            ></ion-icon>
+          </ion-button>
+        </td>
+      </tr>
+
+    
+    </tbody>
+  </table>
+</ion-grid>
+
+
+<ion-grid *ngIf="tabVenta.activotabventa" style="background-color:white;color:#898989;">
+
+  <ion-row *ngIf="listaVentas.length == 0" style="text-align: center;" >
+    <ion-col>
+      No se a encontrado información para mostrar
+    </ion-col>
+  </ion-row>
+
+  <ion-row *ngFor="let item of listaVentas" style="border-bottom: 1px solid #e9eaeb;" >
+    <ion-col size="9" >
+      <ion-row >
+        <ion-col>
+          <ion-row>
+            <ion-col>
+              {{item.Documento}}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+             
+              <ion-badge color="primary" style="font-size: 2vh;" > 
+                <ion-icon name="alarm"></ion-icon>{{item.HoraInicio.split(':')[0] + ':' + item.HoraInicio.split(':')[1] }}</ion-badge>
+            </ion-col>
+            <ion-col style="padding-left: 0;padding-right: 0;">
+
+              <ion-badge color="success" style="color:white;font-size: 1.8vh;width: 100%;"> 
+              <img  width="18" height="18" src="/assets/icon/seat.png" /> {{item.NroAsiento}}    
+              </ion-badge> 
+            </ion-col>
+          </ion-row>
+          
+        </ion-col>
+        <ion-col>
+          <ion-row>
+            <ion-col>
+              {{item.Ruta.split('-')[0]}}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              {{item.Ruta.split('-')[1]}}
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;font-size: 2vh" >
+          <span>{{item.RazonSocial}}</span>
+          
+        </ion-col>
+        
+      </ion-row>
+    </ion-col>
+
+    <ion-col>
+      <ion-row>
+        <ion-col>
+          {{item.Simbolo}} {{item.Total}}   
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-icon (click)="abrirOpciones(item)" style="font-size: 4vh;" name="add-circle"></ion-icon>
+        </ion-col>
+      </ion-row>
+      
+    </ion-col>
+  </ion-row>
+  
+ 
+
+</ion-grid>
+
+  <!-- <ion-grid *ngIf="tabVenta.activotabventa" style="background-color:white;color:black;">
+    <table style="width:100%" class="tablaprogramacion"  >
+      <thead>
+        <tr style="background-color:#0096ff;color:white">
+          <th style="text-align: left">H.INI</th>
+          <th style="text-align: left">CLIENTE</th>
+          <th style="text-align: left" >ASI.</th>
+          <th style="text-align: left" >TOTAL</th>
+          <th style="text-align: left"></th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr *ngIf="listaVentas.length == 0">
+          <td style="text-align: center;"  colspan="5" >No se a encontrado información</td>
+        </tr>
+
+        <tr *ngFor="let item of listaVentas" style="border-bottom: 1px solid black;height: 60px;">
+          <td><ion-badge color="primary" style="font-size: 2vh;" >{{item.HoraInicio.split(':')[0] + ':' + item.HoraInicio.split(':')[1] }}</ion-badge>  </td>
+          <td style="max-width: 50px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;font-size: 2vh" ><span>{{item.NroDocumentoIdentidad}}</span> </td>
+          <td style="text-align: center;"> <ion-badge color="success" style="color:white;font-size: 2vh">{{item.NroAsiento}}</ion-badge> </td>
+          <td style="text-align: right;padding-right: 15px;font-size: 2vh">{{item.Total}}</td>
+          <td> <img (click)="abrirOpciones(item)" src="/assets/icon/more.png" /></td>
+        </tr>
+      </tbody>
+    </table>
+  </ion-grid> -->
+
+
+
+<!-- 
+  <ion-grid *ngIf="tabVenta.activotabneto"  style="background-color:white;color:black;">
+    <table style="width:100%" class="tablaprogramacion" >
+      <thead>
+        <tr style="background-color:#0096ff;color:white">
+          <th style="text-align: right">IN VENT</th>
+          <th style="text-align: right">IN CAJ</th>
+          <th style="text-align: right">EG CAJ</th>
+          <th style="text-align: right" >NETO</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr *ngIf="listaNeto.length == 0">
+          <td style="text-align: center;" colspan="4">No se a encontrado información</td>
+        </tr>
+
+        <tr *ngFor="let item of listaNeto" style="border-bottom: 1px solid black">
+          <td style="text-align: right;padding-right: 15px;">{{item.TotalIngresoVenta ? item.TotalIngresoVenta: '0.00' }}</td>
+          <td style="text-align: right;padding-right: 15px;">{{item.TotalIngresoCaja ? item.TotalIngresoCaja : '0.00' }}</td>
+          <td style="text-align: right;padding-right: 15px;">{{item.TotalEgresoCaja ? item.TotalEgresoCaja : '0.00'}}</td>
+          <td style="text-align: right;"><ion-badge color="success" style="text-align: right;" >{{item.Neto ? item.Neto : '0.00' }}</ion-badge>  </td>
+        </tr>
+      </tbody>
+    </table>
+  </ion-grid> -->
+
+
+
+
+</ion-content>

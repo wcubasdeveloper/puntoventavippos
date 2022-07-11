@@ -1,0 +1,8 @@
+{
+    "/SUBSIDIO/*": {
+        "target" : "https://desarrollo.atu.gob.pe",
+        "secure" : true,
+        "changeOrigin" : true,
+        "logLevel" : "debug"
+    }
+}

@@ -1,0 +1,77 @@
+<ion-text style="background-color: #0096ff;color:white" >
+  <h4 style="text-align: center;" (click)="ventasclick();" >VENTAS</h4>
+</ion-text>
+
+  <ion-content [fullscreen]="false" color="medium" >
+    <ion-list lines="full" class="ion-no-margin">
+      <ion-item>
+          <ion-datetime displayFormat="DD/MM/YYYY" [min]="minDate"  [(ngModel)]="fechaActual"  (ionChange)="cambioFecha()" placeholder="Seleccionar fecha"></ion-datetime>
+      </ion-item>
+  
+      <ion-item>
+          <ion-select #puntoInicio  [(ngModel)]="origenSeleccionado" (ionChange)="cambioPuntoInicio(puntoInicio.value, $event);"   cancelText="Salir" icon="" interface="action-sheet">
+              <ion-select-option  value="0">Seleccionar origen</ion-select-option>
+              <!-- <ion-select-option  value="1">A</ion-select-option>
+              <ion-select-option  value="2">B</ion-select-option>
+              <ion-select-option  value="3">C</ion-select-option>
+              <ion-select-option  value="4">D</ion-select-option> -->
+
+              <ion-select-option  
+                *ngFor="let punto of datoPuntos" 
+                [value]="punto.CodPunto"
+              >{{ punto.NomPunto }}</ion-select-option>
+              
+          </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-select  #puntoDestino [(ngModel)]="destinoSeleccionado"  (ionChange)="cambioPuntoDestino(puntoDestino.value);" value="0" cancelText="Salir"  interface="action-sheet">
+          <ion-select-option value="0">Seleccionar destino</ion-select-option>
+          <ion-select-option *ngFor="let punto of datoPuntos" value="{{punto.CodPunto}}" >{{ punto.NomPunto }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+    <br>
+
+    
+    <ion-grid style="background-color:white;color:#898989">
+      <table style="width:100%" id="tablaprogramacion">
+        <thead>
+          <tr style="background-color: #ffffff;color: #0096ff;border-bottom: 1px solid #008ef1;height: 39px;">
+            <th style="text-align: left">HORA</th>
+            <th style="text-align: left" >ORIGEN</th>
+            <th style="text-align: left">DESTINO</th>
+            <th style="text-align: left">P</th>
+            <!-- <th style="text-align: left">E</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <!-- no hay programación para el {FECHA} {NomPuntoOrigen} {NomPuntoDestino} -->
+          <tr *ngIf="mensajeListaProgramacion" >
+            <td 
+              colspan="5" 
+              style="text-align: center; background-color: #ffffff; color: #000000bd; font-size: 2vh;">
+              {{mensajeListaProgramacion}} 
+            </td>
+          </tr>
+
+          <tr style="border-bottom: 1px solid #dedede;height: 50px;" *ngFor="let item of datoProgramacion" >
+            <td style="font-size: 2vh;" ><ion-badge style="font-size: 2vh;" color="danger">{{item.HoraInicioBus}}</ion-badge> </td>
+            <td style="font-size: 2vh;">{{item.NomPuntoOrigenBus}}</td>
+            <td style="font-size: 2vh;">{{item.NomPuntoDestinoBus}}</td>
+            <td style="font-size: 2vh;" >
+                <img  width="25" height="25" (click)="abrirAsientosDisponibles(item)"  src="/assets/icon/tickets.png" />   
+              
+
+              <!-- <ion-icon name="cash-outline" (click)="abrirAsientosDisponibles(item)" ></ion-icon> -->
+            </td>
+            <!-- <td><ion-icon name="medkit-outline"></ion-icon></td> -->
+          </tr>
+        
+        </tbody>
+      </table>
+    </ion-grid>
+  </ion-content>
+
+
+

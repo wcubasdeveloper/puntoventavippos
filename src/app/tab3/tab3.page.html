@@ -1,0 +1,45 @@
+<ion-text style="background-color: #0096ff;color:white" >
+  <h4 style="text-align: center;" >DATOS DE LA EMPRESA</h4>
+</ion-text>
+
+<ion-content [fullscreen]="false" color="medium">
+  <ion-list>
+    <ion-item >
+      <ion-label position="stacked">Empresa</ion-label>
+        <h2 style="text-align: center;" >{{nombreEmpresaLogin}}</h2>
+    </ion-item>
+
+    <ion-item >
+      <ion-label position="stacked">Usuario</ion-label>
+        <h4 style="text-align: center;" >{{nombreUsuarioYPersonaLogin}}</h4>
+    </ion-item>
+
+
+
+    <ion-item-divider>
+      <ion-label>
+        Configurar impresora
+      </ion-label>
+    </ion-item-divider>
+
+    <ion-item>
+      <ion-label>
+        Estado Bluetooth
+      </ion-label>
+      <ion-label stlot="end">
+        <ion-toggle color="success" [(ngModel)]="estadoBluethooDispositivo" (ionChange)="cambioToggleBluet($event)" ></ion-toggle>
+      </ion-label>
+    </ion-item>
+
+    <ion-item >
+      <ion-button  id="botonEstadoBlut" style="width:100%"  expand="block"  type="button"   shape="round" color="danger">Impresora desconectada <ion-icon name="bluetooth-outline"></ion-icon></ion-button>
+
+      <ion-icon  *ngIf="estadoBluethooDispositivo" slot="end" name="settings-outline" (click)="abrirConfiguracion()" ></ion-icon>
+    </ion-item>
+
+    <ion-item >
+      <ion-button  style="width:100%"  expand="block" type="button"  (click)="cerrarSesion()" shape="round" color="danger">Cerrar sesión <ion-icon name="bluetooth-outline"></ion-icon></ion-button>
+
+    </ion-item>
+  </ion-list>
+</ion-content>

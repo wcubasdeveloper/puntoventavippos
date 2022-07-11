@@ -1,0 +1,15 @@
+<ion-text style="background-color: #0096ff;color:white" >
+  <ion-icon name="close-outline" style="font-size: 25px;" (click)="salirDeConfiguracion('cierre','');"></ion-icon>
+  <h4 style="text-align: center;" >Lista de Dispositivos conectados</h4>
+</ion-text>
+
+<ion-content [fullscreen]="false" color="medium">
+  <ion-list>
+    <ion-item *ngFor="let item of listablutusFiltrados">
+        <p><span style="color:black" >{{item.nombre}}</span></p>
+        <!-- <ion-button *ngIf="item.address == estadoImpresora.codigoimpresora" expand="full" type="button" color="danger"  (click)="desconectar(item.address, item.name)"  >DESCONECTAR</ion-button> -->
+        <ion-button slot="end" color="{{item.status == 'conectado'? 'danger' : 'success' }}" expand="full" type="button"  (click)="conectarConDevice(item.codigoimpresora, item.nombre, item.status)"  >{{item.status == 'conectado' ? 'DESCONECTAR': 'CONECTAR'}}</ion-button>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
